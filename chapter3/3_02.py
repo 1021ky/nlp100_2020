@@ -1,8 +1,5 @@
 # 記事中でカテゴリ名を宣言している行を抽出せよ．
 
-import codecs
-import json
-
 
 def is_england_item(data: str):
     if "イギリス" in data:
