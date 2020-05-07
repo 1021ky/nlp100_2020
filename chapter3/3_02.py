@@ -1,8 +1,6 @@
 # 記事のカテゴリ名を（行単位ではなく名前で）抽出せよ．
 
 import re
-import codecs
-import json
 
 
 def is_england_item(data: str):
