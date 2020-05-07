@@ -1,4 +1,4 @@
-# Wikipedia記事のJSONファイルを読み込み，「イギリス」に関する記事本文を表示せよ．問題21-29では，ここで抽出した記事本文に対して実行せよ．
+# 記事中でカテゴリ名を宣言している行を抽出せよ．
 
 
 def is_england_item(data: str):
@@ -7,7 +7,11 @@ def is_england_item(data: str):
     return False
 
 
+england_texts = []
 with open("jawiki-country.json") as f:
     for line in f.readlines():
         if is_england_item(line):
-            print(line, end="")
+            england_texts.append(line)
+for text in england_texts:
+    if "Category" in text:
+        print(text)

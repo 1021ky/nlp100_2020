@@ -1,8 +1,6 @@
-# 記事のカテゴリ名を（行単位ではなく名前で）抽出せよ．
+# 記事中に含まれるセクション名とそのレベル（例えば”== セクション名 ==”なら1）を表示せよ．
 
 import re
-import codecs
-import json
 
 
 def is_england_item(data: str):
@@ -11,10 +9,11 @@ def is_england_item(data: str):
     return False
 
 
-prog = re.compile(r"\[\[Category:(\w+)\]\]")
+prog = re.compile(
+    r"(?P<section_level_start>==+) (?P<section_name>\w+) (?P<section_level_end>==+)")
 
 
-def search_category_name(data: str):
+def search_section(data: str):
     return prog.finditer(data)
 
 
@@ -23,6 +22,9 @@ with open("jawiki-country.json") as f:
     for line in f.readlines():
         if is_england_item(line):
             england_texts.append(line)
-for matched in search_category_name("".join(england_texts)):
-    for m in matched.groups(""):
-        print(m)
+
+for matched in search_section("".join(england_texts)):
+    sls = matched.group("section_level_start")
+    level = sls.count("=") - 1
+    name = matched.group("section_name")
+    print(f"{name} {level}")
